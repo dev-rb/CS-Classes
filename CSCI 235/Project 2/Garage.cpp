@@ -3,11 +3,22 @@
 #include <iostream>
 
 template <typename ItemType>
+struct null
+{
+
+    ItemType t;
+};
+
+template <typename ItemType>
 Garage<ItemType>::Garage(size_t capacity)
 {
     capacity_ = capacity;
     spaces_occupied_ = 0;
     items_ = new ItemType[capacity];
+    for (int i = 0; i < capacity; i++)
+    {
+        items_[i] = null<ItemType>().t;
+    }
 }
 
 template <typename ItemType>
@@ -80,7 +91,10 @@ std::vector<ItemType> Garage<ItemType>::toVector() const
 
     for (int i = 0; i < capacity_; i++)
     {
-        contents.push_back(items_[i]);
+        if (items_[i] != null<ItemType>().t)
+        {
+            contents.push_back(items_[i]);
+        }
     }
 
     return contents;
@@ -110,7 +124,7 @@ void Garage<ItemType>::display() const
     ItemType prev;
     for (int i = 0; i < spaces_occupied_; i++)
     {
-        if (items_[i] != prev)
+        if (items_[i] != prev && (items_[i] != null<ItemType>().t))
         {
             std::cout << items_[i].getName() << " " << items_[i].getManufacturer() << std::endl;
             prev = items_[i];
