@@ -40,7 +40,7 @@ bool Garage<ItemType>::add(const ItemType &to_add)
 
     if (can_add)
     {
-        items_[spaces_occupied_] = to_add;
+        items_[spaces_occupied_ - ((spaces_occupied_ / 2))] = to_add;
         spaces_occupied_ += to_add.getSpaces();
     }
 
